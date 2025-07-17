@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cronómetro WS 2024</title>
+  <style>
+    body {
+      font-family: Arial;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+      padding: 10px;
+    }
+    #count-down {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+    .disabled {
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cronómetro WS 2024</h1>
+  <input type="text" id="habilidad" placeholder="Nombre habilidad">
+  <input type="text" id="modulo" placeholder="Nombre módulo"><br>
+  <input type="number" id="horas" placeholder="Horas" min="0">
+  <input type="number" id="minutos" placeholder="Minutos" min="0" max="59">
+  <input type="number" id="segundos" placeholder="Segundos" min="0" max="59"><br>
+  <button onclick="iniciarCuentaRegresiva()">Iniciar</button>
+  
+
+  <div id="count-down" class="disabled">00:00:00</div>
+
+  <script>
+    let timerInterval;
+
+    function iniciarCuentaRegresiva() {
+      const h = parseInt(document.getElementById('horas').value);
+      const m = parseInt(document.getElementById('minutos').value);
+      const s = parseInt(document.getElementById('segundos').value);
+
+      let totalSegundos = h * 3600 + m * 60 + s;
+      const display = document.getElementById('count-down');
+      display.classList.remove('disabled');
+
+      clearInterval(timerInterval); 
+      timerInterval = setInterval(() => {
+        if (totalSegundos <= 0) {
+          clearInterval(timerInterval);
+          display.textContent = "¡Tiempo terminado!";
+          return;
+        }
+
+        totalSegundos--;
+        const horas = String(Math.floor(totalSegundos / 3600)).padStart(2, '0');
+        const minutos = String(Math.floor((totalSegundos % 3600) / 60)).padStart(2, '0');
+        const segundos = String(totalSegundos % 60).padStart(2, '0');
+
+        display.textContent = `${horas}:${minutos}:${segundos}`;
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>

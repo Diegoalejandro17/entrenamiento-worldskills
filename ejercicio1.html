@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronometro ws</title>
+</head>
+<body>
+  <h1>cronometro ws 2024</h1>
+  <input type="text" id="habilidad" placeholder="Nombre de la habilidad">
+  <input type="text" id="modulo" placeholder="nombvre del modulo">
+  <input type="number" id="horas" placeholder="horas">
+  <input type="number" id="minutos" placeholder="minutos">
+  <input type="number" id="segundos" placeholder="segundos">
+  <button onclick="iniciarCuentaRegresiva()">iniciar</button>
+
+  <div id="count-down" class="disabled">00:00:00</div>
+
+  <script>
+    let timerInterval
+
+    function iniciarCuentaRegresiva() {
+       const h = parseInt(document.getElementById('horas').value);
+       const m = parseInt(document.getElementById('minutos').value);
+       const s = parseInt(document.getElementById('segundos').value);
+
+       let totalSegundos = h * 3600 + m * 60 + s;
+       const display = document.getElementById('count-down');
+       display.classList.remove('disabled');
+    }
+  </script>
+</body>
+</html>

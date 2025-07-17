@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Luces Navideñas</title>
+  <style>
+    body {
+      background: #002;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      color: white;
+    }
+
+    .arbol {
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 150px solid green;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .luz {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: red;
+      position: absolute;
+      transition: background 0.2s ease;
+    }
+
+    .on {
+      background: yellow;
+      box-shadow: 0 0 10px yellow;
+    }
+  </style>
+</head>
+<body>
+  <h2>Luces Navideñas Aleatorias</h2>
+  <div class="arbol" id="arbol">
+    <div class="luz" style="top: 20px; left: 40px;"></div>
+    <div class="luz" style="top: 40px; left: 100px;"></div>
+    <div class="luz" style="top: 60px; left: 70px;"></div>
+    <div class="luz" style="top: 80px; left: 30px;"></div>
+    <div class="luz" style="top: 100px; left: 90px;"></div>
+    <div class="luz" style="top: 120px; left: 60px;"></div>
+  </div>
+
+  <script>
+    const luces = document.querySelectorAll('.luz');
+
+    function parpadearAleatorio() {
+      luces.forEach(luz => luz.classList.remove('on'));
+      const random = Math.floor(Math.random() * luces.length);
+      luces[random].classList.add('on');
+    }
+
+    setInterval(parpadearAleatorio, 500);
+  </script>
+</body>
+</html>

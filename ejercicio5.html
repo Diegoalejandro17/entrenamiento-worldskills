@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Torres de Hanoi</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #121212;
+      color: white;
+    }
+
+    .contenedor {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 60px;
+    }
+
+    .torre {
+      width: 150px;
+      height: 300px;
+      border: 2px solid white;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .disco {
+      height: 30px;
+      margin: 5px 0;
+      border-radius: 5px;
+      color: white;
+    }
+
+    .d1 { width: 50px; background: crimson; }
+    .d2 { width: 90px; background: orange; }
+    .d3 { width: 130px; background: seagreen; }
+  </style>
+</head>
+<body>
+  <h1>Torres de Hanoi</h1>
+  <div class="contenedor">
+    <div class="torre" id="A"></div>
+    <div class="torre" id="B"></div>
+    <div class="torre" id="C"></div>
+  </div>
+
+  <script>
+    const torres = document.querySelectorAll('.torre');
+    const discos = [
+      { id: 'd3', clase: 'disco d3', tam: 3 },
+      { id: 'd2', clase: 'disco d2', tam: 2 },
+      { id: 'd1', clase: 'disco d1', tam: 1 },
+    ];
+
+    // Crear discos en la torre A
+    const torreA = document.getElementById('A');
+    discos.forEach(d => {
+      const disco = document.createElement('div');
+      disco.id = d.id;
+      disco.className = d.clase;
+      disco.draggable = true;
+      disco.dataset.size = d.tam;
+      torreA.appendChild(disco);
+    });
+
+    torres.forEach(torre => {
+      torre.addEventListener('dragover', e => e.preventDefault());
+
+      torre.addEventListener('drop', e => {
+        const id = e.dataTransfer.getData('text/plain');
+        const disco = document.getElementById(id);
+        const tamDisco = parseInt(disco.dataset.size);
+        const top = torre.lastElementChild;
+        const tamTop = top ? parseInt(top.dataset.size) : Infinity;
+
+        if (tamDisco < tamTop) {
+          torre.appendChild(disco);
+        } else {
+          alert('No puedes poner un disco grande sobre uno pequeño.');
+        }
+      });
+    });
+
+    document.querySelectorAll('.disco').forEach(disco => {
+      disco.addEventListener('dragstart', e => {
+        // Solo se puede mover el disco superior
+        const padre = disco.parentElement;
+        if (disco === padre.lastElementChild) {
+          e.dataTransfer.setData('text/plain', disco.id);
+        } else {
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
